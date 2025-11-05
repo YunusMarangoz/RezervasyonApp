@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RezervasyonApp.Data;
 using RezervasyonApp.Entities;
 
 namespace RezervasyonApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize]
     public class CustomersController : Controller
     {
         private readonly DatabaseContext _context;
@@ -46,11 +47,9 @@ namespace RezervasyonApp.Areas.Admin.Controllers
         }
 
         // POST: Admin/Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Surname,Email,Password,IsActive,UserGuid")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -78,11 +77,9 @@ namespace RezervasyonApp.Areas.Admin.Controllers
         }
 
         // POST: Admin/Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email,Password,IsActive,UserGuid")] Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
             if (id != customer.Id)
             {
